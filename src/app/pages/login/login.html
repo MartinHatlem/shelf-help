@@ -1,1 +1,7 @@
-<p>login works!</p>
+<div>
+    <mat-form-field>
+        <mat-label>Input</mat-label>
+        <input matInput [(ngModel)]="name" name = "name" placeholder="Enter username">
+    </mat-form-field>
+    <button (click)="onSubmit()">Log in</button>
+</div>
