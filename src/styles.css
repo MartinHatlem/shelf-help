@@ -18,7 +18,6 @@
 @layer base {
     body {
         font-family: 'Pally', sans-serif;
-        /* You can still use Tailwind's @apply for other utilities: */
         @apply bg-white text-gray-900;
     }
 

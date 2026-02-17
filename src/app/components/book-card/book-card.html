@@ -1,9 +1,9 @@
 <mat-card class="max-w-3xs mx-auto m-4 items-start">
     <img mat-card-image [src]="coverImg" alt="Book cover"/>
     <mat-icon class="absolute z-100 self-end m-2" (click)="toggleFavorite()" [fontIcon]="favorite ? 'star' : 'star_border'"></mat-icon>
-    <mat-card-header class="items-start">
-        <mat-card-title>{{ book.title ? book.title : 'Untitled' }}</mat-card-title>
-        <mat-card-subtitle>{{ book.author ? book.author : 'Unknown Author' }}</mat-card-subtitle>
+    <mat-card-header class="flex flex-col items-start">
+        <strong>{{ book.title ? book.title : 'Untitled' }}</strong>
+        <p>{{ book.author ? book.author : 'Unknown Author' }}</p>
     </mat-card-header>
     <mat-card-content>
     </mat-card-content>
