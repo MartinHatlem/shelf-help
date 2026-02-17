@@ -20,9 +20,9 @@ export interface Book {
 export class BookApi {
   private http = inject(HttpClient);
   private apiUrl = `${environment.apiUrl}/shelf_help_books`;
+  private apiKey = environment.apiKey;
 
   getBooks(): Observable<Book[]> {
     return this.http.get<Book[]>(this.apiUrl);
   }
-  
 }
