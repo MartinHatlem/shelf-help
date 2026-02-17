@@ -6,12 +6,12 @@ import { environment } from '../environments/environment';
 
 export interface Book {
   id: number
-  isbn: string
+  isbn?: string
   title: string
   author: string
   coverImg: string
-  rating: number
-  blurb: string
+  rating?: number
+  blurb?: string
 }
 
 @Injectable({
