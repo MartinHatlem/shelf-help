@@ -1,6 +1,12 @@
 <mat-card class="h-full flex flex-col">
     <img mat-card-image [src]="coverImg" alt="Book cover"/>
-    <mat-icon class="absolute z-100 self-end m-2" (click)="toggleFavorite()" [fontIcon]="favorite ? 'star' : 'star_border'"></mat-icon>
+    <mat-icon 
+        class="absolute z-100 self-end m-2" 
+        (click)="toggleFavorite()" 
+        [fontIcon]="favorite ? 'star' : 'star_border'"
+        [title]="favorite ? 'Remove from favorites' : 'Add to favorites'"
+    >
+    </mat-icon>
     <mat-card-header class="flex flex-col items-start">
         <strong>{{ book.title ? book.title : 'Untitled' }}</strong>
         <p>{{ book.author ? book.author : 'Unknown Author' }}</p>
