@@ -63,8 +63,9 @@ export class LibraryStore {
       next: (newUser) => {
         this.users.update(users => [...users, newUser]);
       },
-      error: (err) => {
-        console.error('Failed to add user', err);
+      error: () => {
+        this.usersError.set('Failed to add user');
+        this.usersLoading.set(false);
       },
     });
   }
