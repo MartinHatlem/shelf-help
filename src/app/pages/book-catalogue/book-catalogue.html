@@ -1,1 +1,6 @@
-<p>book-catalogue works!</p>
+<section>
+    <h1>Book Catalogue</h1>
+    <div class="book-list">
+        <app-book-card *ngFor="let book of books" [book]="book" [favorite]="false"></app-book-card>
+    </div>
+</section>
