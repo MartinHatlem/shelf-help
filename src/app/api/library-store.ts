@@ -12,6 +12,7 @@ export class LibraryStore {
 
   // User state
   readonly users = signal<User[]>([]);
+  readonly currentUser = signal<User | null>(null);
   readonly usersLoading = signal(false);
   readonly usersError = signal<string | null>(null);
 
@@ -62,11 +63,18 @@ export class LibraryStore {
     this.userApi.addUser(user).subscribe({
       next: (newUser) => {
         this.users.update(users => [...users, newUser]);
+        this.currentUser.set(newUser);
+        console.log('Current user set to:', user);
       },
       error: () => {
         this.usersError.set('Failed to add user');
         this.usersLoading.set(false);
       },
     });
+  }
+
+  setCurrentUser(user: User | null) {
+    this.currentUser.set(user);
+    console.log('Current user set to:', user);
   }
 }
