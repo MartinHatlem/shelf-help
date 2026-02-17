@@ -13,7 +13,7 @@ import { EventEmitter } from 'stream';
 
 export class BookCard {
   @Input() book!: Book; // TODO: change type to book once merged with api branch
-  @Input() favorite = false; // TODO: Connect to whether user has favorited the book or not
+  @Input() favorite? = false; // TODO: Connect to whether user has favorited the book or not
   @Input() coverImg = '/placeholder.png'; // TODO: Connect to actual book cover image from API
 
   // TODO: Add output event emitter for favorite toggle
