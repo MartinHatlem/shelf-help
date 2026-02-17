@@ -1,5 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { Navbar } from './components/navbar/navbar';
 import { Login } from './pages/login/login';
 import { BookCatalogue } from './pages/book-catalogue/book-catalogue';
 import { BookDetails } from './pages/book-details/book-details';
@@ -8,7 +9,7 @@ import { BookCard } from './components/book-card/book-card';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Login, BookCatalogue, BookDetails, ReadingList, BookCard],
+  imports: [RouterOutlet, Login, BookCatalogue, BookDetails, ReadingList, BookCard,Navbar],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
