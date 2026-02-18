@@ -13,6 +13,8 @@
 
     --color-white: #fff8e7;
     --color-dark-matcha: #535a4f;
+
+    --color-glow: #ffffff6b;
 }
 
 @layer base {
@@ -51,7 +53,7 @@
 
 /* ----------- Custom classes ------------- */
 .main {
-    @apply m-auto max-w-3xl;
+    @apply m-auto flex h-fit max-w-3xl items-center justify-center;
 }
 
 .book-grid {

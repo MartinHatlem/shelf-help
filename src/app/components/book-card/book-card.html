@@ -1,12 +1,14 @@
-<mat-card class="h-full flex flex-col">
-    <img mat-card-image [src]="book.coverImg" alt="Book cover"/>
+<div class="flex flex-col h-full">
     <mat-icon 
-        class="absolute z-100 self-end m-2" 
+        [class]="'absolute z-100 self-end m-2 rounded-full bg-glow transition-all duration-500'
+        + (favorite ? ' rotate-360' : '')" 
         (click)="toggleFavorite()" 
         [fontIcon]="favorite ? 'star' : 'star_border'"
         [title]="favorite ? 'Remove from favorites' : 'Add to favorites'"
-    >
-    </mat-icon>
+    />
+<mat-card class="h-full" [routerLink]="'book-details/' + book.id">
+    <img mat-card-image [src]="book.coverImg" alt="Book cover"/>
+
     <mat-card-header class="flex flex-col items-start">
         <strong>{{ book.title ? book.title : 'Untitled' }}</strong>
         <p>{{ book.author ? book.author : 'Unknown Author' }}</p>
@@ -14,3 +16,4 @@
     <mat-card-content>
     </mat-card-content>
 </mat-card>
+</div>
