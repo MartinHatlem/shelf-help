@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { BookApi, Book } from './book-api';
-import { UserApi, User } from './user-api';
+import { UserApi, User, CreateUser } from './user-api';
 
 
 @Injectable({
@@ -10,9 +10,9 @@ export class LibraryStore {
   private bookApi = inject(BookApi);
   private userApi = inject(UserApi);
 
-
   // User state
   readonly users = signal<User[]>([]);
+  readonly currentUser = signal<User | null>(null);
   readonly usersLoading = signal(false);
   readonly usersError = signal<string | null>(null);
 
@@ -57,5 +57,24 @@ export class LibraryStore {
 
   getBookById(id: number): Book | undefined {
     return this.books().find(book => book.id === id);
+  }
+
+  addUser(user: CreateUser) {
+    this.userApi.addUser(user).subscribe({
+      next: (newUser) => {
+        this.users.update(users => [...users, newUser]);
+        this.currentUser.set(newUser);
+        console.log('Current user set to:', user);
+      },
+      error: () => {
+        this.usersError.set('Failed to add user');
+        this.usersLoading.set(false);
+      },
+    });
+  }
+
+  setCurrentUser(user: User | null) {
+    this.currentUser.set(user);
+    console.log('Current user set to:', user);
   }
 }
