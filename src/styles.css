@@ -3,18 +3,18 @@
 @import "tailwindcss";
 
 @theme {
-    --color-secondary: #DDF6D2;
-    --color-secondary-hover: #CAE8BD;
-    --color-secondary-active: #B0DB9C;
-
     --color-primary: #b0c2b2;
     --color-primary-hover: #bad6bd;
     --color-primary-active: #bceec2;
 
-    --color-white: #fff8e7;
-    --color-dark-matcha: #535a4f;
+    --color-secondary: #DDF6D2;
+    --color-secondary-hover: #CAE8BD;
+    --color-secondary-active: #B0DB9C;
 
-    --color-glow: #ffffff6b;
+    --color-white: #fff8e7;
+    --color-dark-matcha: #50584c;
+
+    --color-glow: #0000004f;
 }
 
 @layer base {
@@ -28,11 +28,11 @@
     }
 
     h1 {
-        @apply text-3xl font-bold mb-2 text-dark-matcha;
+        @apply text-3xl font-bold mb-2 tracking-tight;
     }
 
     h2 {
-        @apply text-xl font-bold mb-4;
+        @apply text-xl font-bold mb-2 text-dark-matcha;
     }
 
     button {
@@ -53,7 +53,7 @@
 
 /* ----------- Custom classes ------------- */
 .main {
-    @apply m-auto flex h-fit max-w-3xl items-center justify-center;
+    @apply m-auto flex max-w-3xl items-center justify-center;
 }
 
 .book-grid {

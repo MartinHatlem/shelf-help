@@ -1,17 +1,19 @@
 <div class="flex flex-col h-full">
-    <mat-icon 
-        [class]="'absolute z-100 self-end m-2 rounded-full bg-glow transition-all duration-500'
-        + (favorite ? ' rotate-360' : '')" 
-        (click)="toggleFavorite()" 
-        [fontIcon]="favorite ? 'star' : 'star_border'"
-        [title]="favorite ? 'Remove from favorites' : 'Add to favorites'"
-    />
-<mat-card class="h-full" [routerLink]="'book-details/' + book.id">
+    <div class="absolute z-100 self-end m-2 text-amber-300">
+        <mat-icon 
+            [class]="' cursor-pointer hover:scale-110 rounded-full bg-glow transition-all duration-500'
+            + (favorite ? ' rotate-360' : '')" 
+            (click)="toggleFavorite()" 
+            [fontIcon]="favorite ? 'star' : 'star_border'"
+            [title]="favorite ? 'Remove from favorites' : 'Add to favorites'"
+        />
+    </div>
+<mat-card class="h-full hover:text-dark-matcha cursor-pointer hover:scale-101 transition-all duration-100" [routerLink]="'book-details/' + book.id">
     <img mat-card-image [src]="book.coverImg" alt="Book cover"/>
 
     <mat-card-header class="flex flex-col items-start">
-        <strong>{{ book.title ? book.title : 'Untitled' }}</strong>
-        <p>{{ book.author ? book.author : 'Unknown Author' }}</p>
+        <strong class="text-sm">{{ book.title ? book.title : 'Untitled' }}</strong>
+        <p class="text-sm">{{ book.author ? book.author : 'Unknown Author' }}</p>
     </mat-card-header>
     <mat-card-content>
     </mat-card-content>
