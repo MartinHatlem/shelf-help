@@ -18,6 +18,7 @@ export class LibraryStore {
 
   // Book state
   readonly books = signal<Book[]>([]);
+  readonly currentBook = signal<Book | null>(null);
   readonly booksLoading = signal(false);
   readonly booksError = signal<string | null>(null);
 
@@ -51,12 +52,35 @@ export class LibraryStore {
     });
   }
 
-  getUserById(id: number): User | undefined {
-    return this.users().find(user => user.id === id);
+  getUserById(id: number){
+    this.usersLoading.set(true);
+    this.usersError.set(null);
+    this.userApi.loadUserById(id).subscribe({
+      next: (user) => {
+        this.currentUser.set(user);
+        this.usersLoading.set(false);
+      },
+      error: () => {
+        this.usersError.set('Failed to load user');
+        this.usersLoading.set(false);
+      },
+    });
   }
 
-  getBookById(id: number): Book | undefined {
-    return this.books().find(book => book.id === id);
+  getBookById(id: number){
+    this.booksLoading.set(true);
+    this.booksError.set(null);
+    this.bookApi.loadBookById(id).subscribe({
+      next: (book) => {
+        this.currentBook.set(book);
+        this.booksLoading.set(false);
+      },
+      error: () => {
+        this.booksError.set('Failed to load book');
+        this.booksLoading.set(false);
+      },
+    });
+    
   }
 
   addUser(user: CreateUser) {
