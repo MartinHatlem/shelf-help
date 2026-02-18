@@ -1,6 +1,10 @@
-<section>
-    <h1>{{book?.title}}</h1>
-    <h2>by {{book?.author}}</h2>
-    <p>{{book?.blurb}}</p>
-    <img [src]="book?.coverImg" alt="Book Cover">
-</section>
+<div class="flex flex-row">
+    <section class="flex items-start grow max-w-[57%]">
+        <h1>{{book?.title}}</h1>
+        <h2>by {{book?.author}}</h2>
+        <p >{{book?.blurb}}</p>
+    </section>
+    <div class="flex items-center justify-center">
+        <img class="rounded-2xl" [src]="book?.coverImg" alt="Book Cover">
+    </div>
+</div>
