@@ -28,4 +28,8 @@ export class UserApi {
     const headers = { 'Content-Type': 'application/json', 'x-api-key': this.apiKey };
     return this.http.post<User>(this.userURL, user, { headers });
   }
+
+  loadUserById(id: number): Observable<User> {
+    return this.http.get<User>(`${this.userURL}/${id}`);
+  }
 }
