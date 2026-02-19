@@ -1,1 +1,4 @@
-<p>reading-list works!</p>
+<h1 class="flex justify-center"> My Reading List</h1>
+<section class="book-grid">
+    <app-book-card *ngFor="let book of readingListBooks()" [book]="book"></app-book-card>
+</section>
