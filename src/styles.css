@@ -24,15 +24,15 @@
     }
 
     section {
-        @apply p-4 m-4 bg-primary rounded-2xl flex flex-col items-center;
+        @apply p-10 m-4 bg-primary rounded-2xl flex flex-col items-center;
     }
 
     h1 {
-        @apply text-3xl font-bold mb-2 tracking-tight;
+        @apply text-4xl md:text-5xl font-bold mb-2 tracking-tight;
     }
 
     h2 {
-        @apply text-xl font-bold mb-2 text-dark-matcha;
+        @apply text-2xl md:text-3xl font-bold mb-2 text-dark-matcha;
     }
 
     button {
@@ -44,7 +44,8 @@
     }
 
     a {
-        @apply text-white hover:text-primary-hover active:text-primary-active transition-all duration-300 cursor-pointer;
+        @apply text-xl sm:text-3xl text-white hover:text-primary-hover active:text-primary-active 
+        transition-all duration-300 cursor-pointer;
     }
 }
 
@@ -53,7 +54,7 @@
 
 /* ----------- Custom classes ------------- */
 .main {
-    @apply m-auto flex max-w-3xl items-center justify-center;
+    @apply m-auto flex max-w-5xl items-center justify-center;
 }
 
 .book-grid {
