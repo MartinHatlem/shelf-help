@@ -22,6 +22,7 @@ export class Login {
   error = this.store.usersError;
 
   ngOnInit() {
+    this.store.setCurrentUser(null); // Log out automatically when visiting login page
     this.store.loadUsers();
   }
 

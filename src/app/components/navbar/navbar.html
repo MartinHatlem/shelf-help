@@ -3,5 +3,5 @@
     <a routerLink="/reading-list" [class]="!isAuthenticated ? 'cursor-default text-primary opacity-50' : '' ">
        Reading List
     </a>
-    <a routerLink="/login" [class]="isAuthenticated ?'cursor-default text-primary opacity-50' : '' ">Login</a>
+    <a class="absolute right-8" routerLink="/login">{{isAuthenticated ? 'Logout' : 'Login'}}</a>
 </nav>
