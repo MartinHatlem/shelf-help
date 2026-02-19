@@ -2,11 +2,11 @@ import { Component, Input, Output } from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import { Book } from '../../api/book-api';
-import { EventEmitter } from 'stream';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-book-card',
-  imports: [MatCardModule, MatIconModule],
+  imports: [MatCardModule, MatIconModule, RouterLink],
   templateUrl: './book-card.html',
   styleUrl: './book-card.css',
 })
