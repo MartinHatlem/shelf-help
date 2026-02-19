@@ -7,6 +7,7 @@ import { UserApi, User, CreateUser } from './user-api';
   providedIn: 'root',
 })
 export class LibraryStore {
+  
   private bookApi = inject(BookApi);
   private userApi = inject(UserApi);
 
@@ -30,7 +31,7 @@ export class LibraryStore {
         this.users.set(users);
         this.usersLoading.set(false);
       },
-      error: (err) => {
+      error: () => {
         this.usersError.set('Failed to load users');
         this.usersLoading.set(false);
       },
@@ -45,7 +46,7 @@ export class LibraryStore {
         this.books.set(books);
         this.booksLoading.set(false);
       },
-      error: (err) => {
+      error: () => {
         this.booksError.set('Failed to load books');
         this.booksLoading.set(false);
       },
@@ -57,7 +58,7 @@ export class LibraryStore {
     this.usersError.set(null);
     this.userApi.loadUserById(id).subscribe({
       next: (user) => {
-        this.currentUser.set(user);
+        this.setCurrentUser(user);
         this.usersLoading.set(false);
       },
       error: () => {
@@ -88,8 +89,8 @@ export class LibraryStore {
     this.userApi.addUser(user).subscribe({
       next: (newUser) => {
         this.users.update(users => [...users, newUser]);
-        this.currentUser.set(newUser);
-        console.log('Current user set to:', user);
+        this.setCurrentUser(newUser);
+        console.log('Current user set to:', newUser);
       },
       error: () => {
         this.usersError.set('Failed to add user');
@@ -100,6 +101,55 @@ export class LibraryStore {
 
   setCurrentUser(user: User | null) {
     this.currentUser.set(user);
+    if (user) {
+      localStorage.setItem('currentUser', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('currentUser');
+    }
     console.log('Current user set to:', user);
+  }
+
+  loadCurrentUser() {
+     const storedUser = localStorage.getItem('currentUser');
+    console.log('Stored user on init:', storedUser);
+    if (storedUser) {
+      this.setCurrentUser(JSON.parse(storedUser));
+    }
+  }
+
+  addBookToCollection(bookId: number) {
+    const user = this.currentUser();
+    if (!user) {
+      this.usersError.set('No user logged in');
+      return;
+    }
+    
+    this.userApi.addBookToUserCollection(user.id, bookId).subscribe({
+      next: (updatedUser) => {
+        this.users.update(users => users.map(u => u.id === updatedUser.id ? updatedUser : u));
+        this.setCurrentUser(updatedUser);
+      },
+      error: () => {
+        this.usersError.set('Failed to add book to collection');
+      },
+    });
+  }
+
+  removeBookFromCollection(bookId: number) {
+    const user = this.currentUser();
+    if (!user) {
+      this.usersError.set('No user logged in');
+      return;
+    }
+    
+    this.userApi.removeBookFromUserCollection(user.id, bookId).subscribe({
+      next: (updatedUser) => {
+        this.users.update(users => users.map(u => u.id === updatedUser.id ? updatedUser : u));
+        this.currentUser.set(updatedUser);
+      },
+      error: () => {
+        this.usersError.set('Failed to remove book from collection');
+      },
+    });
   }
 }
