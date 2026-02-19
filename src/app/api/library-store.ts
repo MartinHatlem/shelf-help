@@ -80,7 +80,7 @@ export class LibraryStore {
         this.booksLoading.set(false);
       },
     });
-    return this.currentBook();
+    return this.currentBook;
     
   }
 
