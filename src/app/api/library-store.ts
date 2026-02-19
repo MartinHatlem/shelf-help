@@ -68,6 +68,10 @@ export class LibraryStore {
   }
 
   getBookById(id: number){
+    if (this.books().some(book => book.id === id)) {
+      this.currentBook.set(this.books().find(book => book.id === id) || null);
+      return this.currentBook;
+    }
     this.booksLoading.set(true);
     this.booksError.set(null);
     this.bookApi.loadBookById(id).subscribe({
@@ -80,7 +84,7 @@ export class LibraryStore {
         this.booksLoading.set(false);
       },
     });
-    
+    return this.currentBook;
   }
 
   addUser(user: CreateUser) {
