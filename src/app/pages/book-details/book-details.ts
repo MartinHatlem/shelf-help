@@ -1,5 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
-import { Book } from '../../api/book-api';
+import { Component, inject } from '@angular/core';
 import { LibraryStore } from '../../api/library-store';
 import { ActivatedRoute } from '@angular/router';
 
