@@ -1,5 +1,7 @@
 <nav class="flex gap-4 sm:gap-8 p-4 bg-dark-matcha text-white justify-center">
     <a routerLink="/">Catalogue</a>
-    <a routerLink="/reading-list">Reading List</a>
-    <a routerLink="/login">Login</a>
+    <a routerLink="/reading-list" [class]="!isAuthenticated ? 'cursor-default text-primary opacity-50' : '' ">
+       Reading List
+    </a>
+    <a routerLink="/login" [class]="isAuthenticated ?'cursor-default text-primary opacity-50' : '' ">Login</a>
 </nav>

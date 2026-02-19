@@ -36,7 +36,8 @@
     }
 
     button {
-        @apply px-4 py-2 bg-secondary hover:bg-secondary-hover active:bg-secondary-active rounded-full transition-all duration-300;
+        @apply px-4 py-2 bg-secondary hover:bg-secondary-hover active:bg-secondary-active disabled:bg-gray-400 text-dark-matcha
+        rounded-full transition-all duration-300;
     }
     
     strong {
