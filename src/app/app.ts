@@ -14,5 +14,6 @@ export class App implements OnInit {
   libraryStore = inject(LibraryStore);
   ngOnInit() {
     this.libraryStore.loadBooks();
+    this.libraryStore.loadCurrentUser();
   }
 }
