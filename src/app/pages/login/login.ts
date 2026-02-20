@@ -27,7 +27,7 @@ export class Login {
   }
 
   onSubmit() {
-    const trimmed = this.name.trim();
+    const trimmed = this.name.trim().toLowerCase();
     if(!trimmed) {
       alert("Username not valid!");
       return;
