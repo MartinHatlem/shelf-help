@@ -12,7 +12,5 @@ import { CommonModule } from '@angular/common';
 export class Navbar {
   private router = inject(Router);
   private libraryStore = inject(LibraryStore);
-  isAuthenticated() {
-    return this.libraryStore.currentUser() !== null;
-  }
+  user = this.libraryStore.currentUser();
 }
