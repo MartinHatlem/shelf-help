@@ -1,1 +1,5 @@
-<p>reading-list works!</p>
+<h1 class="flex justify-center"> My Reading List</h1>
+<section [class]="readingListBooks().length > 0 ? 'book-grid' : 'p-20' ">
+    <h2 *ngIf="readingListBooks().length === 0">Your reading list is empty</h2>
+    <app-book-card *ngFor="let book of readingListBooks()" [book]="book"></app-book-card>
+</section>
