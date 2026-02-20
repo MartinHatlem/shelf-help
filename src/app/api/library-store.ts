@@ -112,9 +112,8 @@ export class LibraryStore {
     console.log('Current user set to:', user);
   }
 
-  // TODO: Ask Dean why both if and else are true at the same time. Schrödinger's localStorage?
   loadCurrentUser() {
-    if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
+    if (typeof window === 'undefined' || !window.localStorage) {
       console.warn('Be aware: LocalStorage is not available on server side rendering.');
     } else {
       const storedUser = localStorage.getItem('currentUser') || null;
