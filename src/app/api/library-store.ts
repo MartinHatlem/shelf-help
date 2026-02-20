@@ -153,7 +153,7 @@ export class LibraryStore {
     this.userApi.removeBookFromUserCollection(user.id, bookId).subscribe({
       next: (updatedUser) => {
         this.users.update(users => users.map(u => u.id === updatedUser.id ? updatedUser : u));
-        this.currentUser.set(updatedUser);
+        this.setCurrentUser(updatedUser);
       },
       error: () => {
         this.usersError.set('Failed to remove book from collection');
