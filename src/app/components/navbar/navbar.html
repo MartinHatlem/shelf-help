@@ -1,7 +1,7 @@
 <nav class="flex gap-4 sm:gap-8 p-4 bg-dark-matcha text-white justify-center">
     <a routerLink="/">Catalogue</a>
-    <a routerLink="/reading-list" [class]="!isAuthenticated() ? 'cursor-default text-primary opacity-50' : '' ">
+    <a routerLink="/reading-list" [class]="(user === null) ? 'cursor-default text-primary opacity-50' : '' ">
        Reading List
     </a>
-    <a class="absolute right-8" routerLink="/login">{{isAuthenticated() ? 'Logout' : 'Login'}}</a>
+    <a class="absolute right-8" routerLink="/login">{{(user !== null) ? 'Logout' : 'Login'}}</a>
 </nav>
