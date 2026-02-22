@@ -12,5 +12,5 @@ import { CommonModule } from '@angular/common';
 export class Navbar {
   private router = inject(Router);
   private libraryStore = inject(LibraryStore);
-  user = this.libraryStore.currentUser();
+  user = this.libraryStore.currentUser;
 }
