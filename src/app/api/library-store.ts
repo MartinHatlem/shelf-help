@@ -1,5 +1,6 @@
-import { inject, Injectable, signal } from '@angular/core';
-import { BookApi, Book } from './book-api';
+import { inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { BookApi, Book, CreateBook } from './book-api';
 import { UserApi, User, CreateUser } from './user-api';
 
 
@@ -22,6 +23,8 @@ export class LibraryStore {
   readonly currentBook = signal<Book | null>(null);
   readonly booksLoading = signal(false);
   readonly booksError = signal<string | null>(null);
+
+  private platformId = inject(PLATFORM_ID);
 
   loadUsers() {
     this.usersLoading.set(true);
@@ -113,14 +116,14 @@ export class LibraryStore {
   }
 
   loadCurrentUser() {
-    if (typeof window === 'undefined' || !window.localStorage) {
-      console.warn('Be aware: LocalStorage is not available on server side rendering.');
-    } else {
-      const storedUser = localStorage.getItem('currentUser') || null;
-      console.log('Stored user on init:', storedUser);
-      if (storedUser) {
-        this.setCurrentUser(JSON.parse(storedUser));
-      }
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
+    const storedUser = localStorage.getItem('currentUser');
+
+    if (storedUser) {
+      this.setCurrentUser(JSON.parse(storedUser));
     }
   }
 
@@ -156,6 +159,18 @@ export class LibraryStore {
       },
       error: () => {
         this.usersError.set('Failed to remove book from collection');
+      },
+    });
+  }
+
+    addBook(book: CreateBook) {
+    this.bookApi.addBook(book).subscribe({
+      next: (newBook) => {
+        this.books.update(books => [...books, newBook]);
+      },
+      error: () => {
+        this.booksError.set('Failed to add book');
+        this.booksLoading.set(false);
       },
     });
   }
