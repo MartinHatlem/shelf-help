@@ -1,0 +1,36 @@
+import { Component, inject} from '@angular/core';
+import { FormBuilder, Validators, ReactiveFormsModule  } from '@angular/forms';
+import { RouterModule} from '@angular/router';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { NgIf } from '@angular/common'
+import { LibraryStore } from '../../api/library-store';
+
+@Component({
+  selector: 'app-book-form',
+  imports: [RouterModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, NgIf],
+  templateUrl: './book-form.html',
+  styleUrl: './book-form.css',
+})
+export class BookForm {
+  fb = inject(FormBuilder);
+  store = inject(LibraryStore);
+
+  form = this.fb.nonNullable.group({
+      title: ['', Validators.required],
+      author: ['', Validators.required],
+      coverImg: ['', Validators.required],
+      blurb: ['']
+  });
+
+  onSubmit() {
+    if (this.form.invalid) {
+      console.log("Form invalid");
+      return;
+    }
+
+    const data = this.form.getRawValue();
+    this.store.addBook(data);
+    
+  }
+}
