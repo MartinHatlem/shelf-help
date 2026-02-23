@@ -14,8 +14,8 @@ class MockLibraryStore {
 }
 
 describe('BookCatalogue', () => {
-  let component: BookCatalogue;
-  let fixture: ComponentFixture<BookCatalogue>;
+	let component: BookCatalogue;
+	let fixture: ComponentFixture<BookCatalogue>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -26,10 +26,10 @@ describe('BookCatalogue', () => {
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(BookCatalogue);
-    component = fixture.componentInstance;
-    await fixture.whenStable();
-  });
+		fixture = TestBed.createComponent(BookCatalogue);
+		component = fixture.componentInstance;
+		await fixture.whenStable();
+	});
 
   it('should create', () => {
     expect(component).toBeTruthy();

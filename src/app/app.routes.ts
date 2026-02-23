@@ -6,8 +6,8 @@ import { ReadingList } from './pages/reading-list/reading-list';
 import { authGuard } from './guards/auth-guard/auth-guard';
 
 export const routes: Routes = [
-  { path: '', component: BookCatalogue },
-  { path: 'login', component: Login },
-  { path: 'book-details/:id', component: BookDetails },
-  { path: 'reading-list', component: ReadingList, canActivate: [authGuard] },
+	{ path: '', component: BookCatalogue },
+	{ path: 'login', component: Login },
+	{ path: 'book-details/:id', component: BookDetails },
+	{ path: 'reading-list', component: ReadingList, canActivate: [authGuard] },
 ];

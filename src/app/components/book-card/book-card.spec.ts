@@ -15,8 +15,8 @@ const mockBook: Book = {
 };
 
 describe('BookCard', () => {
-  let component: BookCard;
-  let fixture: ComponentFixture<BookCard>;
+	let component: BookCard;
+	let fixture: ComponentFixture<BookCard>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -30,7 +30,7 @@ describe('BookCard', () => {
     await fixture.whenStable();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+	it('should create', () => {
+		expect(component).toBeTruthy();
+	});
 });
