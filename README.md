@@ -46,7 +46,7 @@ The following component tree is generated after development, showing no differen
 - Vitest: A fast and lightweight testing framework for JavaScript and TypeScript, used for unit testing in this project.
 - [Render](https://render.com/): The project uses Render to host an API, providing data to the application. The books delivered by the api is provided as part of the project assignment.
 
-## Development server
+## Running the project (development server)
 
 Before running the project, ensure you have Node.js and npm installed on your machine. You can download them from [Node.js official website](https://nodejs.org/).
 
@@ -62,13 +62,11 @@ export const environment = {
 
 **Note:** The API key provided is for demonstration purposes. In a real production application, you should secure your API keys and not expose them in the client-side code.
 
-````bash
-
 To run the project locally, first install the project dependencies by running:
 
 ```bash
 npm install
-````
+```
 
 Then, run the server by executing:
 
@@ -80,20 +78,21 @@ Once the server is running, open your browser and navigate to `http://localhost:
 
 ## For developers
 
-### Code formatting
+### Code formatting and linting
 
-This project uses [Prettier](https://prettier.io/) for code formatting. To format your code, run:
+This project uses [Eslint](https://eslint.org/) for linting and [Prettier](https://prettier.io/) for code formatting.
 
-```bash
-npm run format
-```
+- For linting, run: `npm run lint`
+- For code formatting, run: `npm run format`
 
-Configure Prettier in VS Code:
+> Remember to run linting and formatting before committing your code!
 
-1. Install the Prettier extension.
+**Configure Prettier in VS Code for automatic formatting on save:**
+
+1. Install the VSCode Prettier extension.
 2. Open settings (Ctrl + ,) and search for "Format On Save".
 3. Enable “Editor: Format On Save”.
-4. Set Prettier as the default formatter: Find "Default formatter" in settings or use `"editor.defaultFormatter": "esbenp.prettier-vscode"`
+4. Set Prettier as the default formatter: Find "Default formatter" in settings and set it to _Prettier_
 
 ### Building
 
