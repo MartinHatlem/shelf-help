@@ -1,16 +1,18 @@
 @use '@angular/material' as mat;
 
 html {
-  height: 100%;
-  @include mat.theme((
-    color: (
-      primary: mat.$green-palette,
-      tertiary: mat.$violet-palette,
-      warn: mat.$red-palette,
-    ),
-  ));
+	height: 100%;
+	@include mat.theme(
+		(
+			color: (
+				primary: mat.$green-palette,
+				tertiary: mat.$violet-palette,
+				warn: mat.$red-palette,
+			),
+		)
+	);
 }
 
 body {
-  color-scheme: light;
+	color-scheme: light;
 }

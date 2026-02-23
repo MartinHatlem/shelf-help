@@ -4,13 +4,13 @@ import { LibraryStore } from '../../api/library-store';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-navbar',
-  imports: [RouterModule, CommonModule],
-  templateUrl: './navbar.html',
-  styleUrl: './navbar.css',
+	selector: 'app-navbar',
+	imports: [RouterModule, CommonModule],
+	templateUrl: './navbar.html',
+	styleUrl: './navbar.css',
 })
 export class Navbar {
-  private router = inject(Router);
-  private libraryStore = inject(LibraryStore);
-  user = this.libraryStore.currentUser();
+	private router = inject(Router);
+	private libraryStore = inject(LibraryStore);
+	user = this.libraryStore.currentUser();
 }
