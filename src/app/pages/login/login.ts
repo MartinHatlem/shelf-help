@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 	templateUrl: './login.html',
 	styleUrl: './login.css',
 })
-export class Login {
+export class Login implements OnInit {
 	private store = inject(LibraryStore);
 	private router = inject(Router);
 
@@ -33,7 +33,7 @@ export class Login {
 			return;
 		}
 
-		let currentUser = this.users().find((user) => user.username === trimmed);
+		const currentUser = this.users().find((user) => user.username === trimmed);
 
 		if (currentUser) {
 			this.store.setCurrentUser(currentUser);
