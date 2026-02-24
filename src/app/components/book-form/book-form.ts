@@ -1,6 +1,6 @@
 import { Component, inject} from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule  } from '@angular/forms';
-import { RouterModule} from '@angular/router';
+import { Router, RouterModule} from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { NgIf } from '@angular/common'
@@ -13,6 +13,7 @@ import { LibraryStore } from '../../api/library-store';
   styleUrl: './book-form.css',
 })
 export class BookForm {
+  router = inject(Router)
   fb = inject(FormBuilder);
   store = inject(LibraryStore);
 
@@ -20,7 +21,7 @@ export class BookForm {
       title: ['', Validators.required],
       author: ['', Validators.required],
       coverImg: ['', Validators.required],
-      blurb: ['']
+      blurb: ['', Validators.maxLength(500)]
   });
 
   onSubmit() {
@@ -31,6 +32,7 @@ export class BookForm {
 
     const data = this.form.getRawValue();
     this.store.addBook(data);
+    this.router.navigate(['/']);
     
   }
 }
