@@ -13,4 +13,14 @@ export class Navbar {
   private router = inject(Router);
   private libraryStore = inject(LibraryStore);
   user = this.libraryStore.currentUser;
+
+  getUsername(): string {
+    const user = this.user();
+    if (!user) {
+      return "Not logged in";
+    }
+
+    const username = user.username.charAt(0).toUpperCase() + user.username.slice(1);
+    return username;
+  }
 }
