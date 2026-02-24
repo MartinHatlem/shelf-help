@@ -5,16 +5,18 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { LibraryStore } from '../../api/library-store';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 
 @Component({
 	selector: 'app-login',
-	imports: [MatFormFieldModule, MatInputModule, MatSelectModule, FormsModule],
+	imports: [MatFormFieldModule, MatInputModule, MatSelectModule, FormsModule, KeycloakAngularModule],
 	templateUrl: './login.html',
 	styleUrl: './login.css',
 })
 export class Login implements OnInit {
 	private store = inject(LibraryStore);
 	private router = inject(Router);
+	private keycloakService = inject(KeycloakService);
 
 	name = '';
 	users = this.store.users;
@@ -24,6 +26,10 @@ export class Login implements OnInit {
 	ngOnInit() {
 		this.store.setCurrentUser(null); // Log out automatically when visiting login page
 		this.store.loadUsers();
+	}
+
+	login() {
+		typeof window !== 'undefined' && this.keycloakService.login();
 	}
 
 	onSubmit() {
