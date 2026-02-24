@@ -1,11 +1,11 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject} from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { LibraryStore } from '../../api/library-store';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule, CommonModule, NgIf],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
@@ -22,5 +22,9 @@ export class Navbar {
 
     const username = user.username.charAt(0).toUpperCase() + user.username.slice(1);
     return username;
+  }
+
+  isLoginPage(): boolean {
+    return this.router.url === '/login';
   }
 }

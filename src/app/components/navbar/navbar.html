@@ -4,5 +4,5 @@
     <a routerLink="/reading-list" [ngClass]="{ 'cursor-default text-primary opacity-50': user() === null }">
        Reading List
     </a>
-    <a class="absolute right-8" routerLink="/login">{{(user() !== null) ? 'Logout' : 'Login'}}</a>
+    <a class="absolute right-8" *ngIf="!isLoginPage()" routerLink="/login"> {{(user() !== null) ? 'Logout' : 'Login'}}</a>
 </nav>
