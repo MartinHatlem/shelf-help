@@ -1,7 +1,7 @@
 <nav class="flex gap-4 sm:gap-8 p-4 bg-dark-matcha text-white justify-center">
     <a class="absolute left-8" > {{(user() !== null) ? 'Hi, ' + getUsername() + '!': ''}}</a>
     <a routerLink="/">Catalogue</a>
-    <a routerLink="/reading-list" [ngClass]="{ 'cursor-default text-primary opacity-50': user() === null }">
+    <a routerLink="/reading-list" [class]="user() === null ? 'cursor-default text-primary opacity-50' : 'opacity-100' ">
        Reading List
     </a>
     <a class="absolute right-8" *ngIf="!isLoginPage()" routerLink="/login"> {{(user() !== null) ? 'Logout' : 'Login'}}</a>
