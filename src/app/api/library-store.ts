@@ -1,5 +1,6 @@
-import { inject, Injectable, signal } from '@angular/core';
-import { BookApi, Book } from './book-api';
+import { inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { BookApi, Book, CreateBook } from './book-api';
 import { UserApi, User, CreateUser } from './user-api';
 
 @Injectable({
@@ -161,4 +162,16 @@ export class LibraryStore {
 			},
 		});
 	}
+
+     addBook(book: CreateBook) {
+    this.bookApi.addBook(book).subscribe({
+      next: (newBook) => {
+        this.books.update(books => [...books, newBook]);
+      },
+      error: () => {
+        this.booksError.set('Failed to add book');
+        this.booksLoading.set(false);
+      },
+    });
+  }
 }
