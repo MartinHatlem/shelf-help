@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 
-
 export interface Book {
   id: number
   title: string
@@ -15,7 +14,7 @@ export interface Book {
 export type CreateBook = Omit<Book, 'id'>;
 
 @Injectable({
-  providedIn: 'root',
+	providedIn: 'root',
 })
 export class BookApi {
   private http = inject(HttpClient);

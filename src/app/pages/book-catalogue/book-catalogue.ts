@@ -13,6 +13,6 @@ import { RouterLink } from '@angular/router';
   styleUrl: './book-catalogue.css',
 })
 export class BookCatalogue {
-  libraryStore = inject(LibraryStore);
-  books = this.libraryStore.books();
+	libraryStore = inject(LibraryStore);
+	books = this.libraryStore.books();
 }

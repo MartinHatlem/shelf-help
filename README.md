@@ -1,20 +1,22 @@
 # ShelfHelp
+
 Welcome to the ShelfHelp project! This is a web application where users can browse books and add them to their personal reading list. The project is written in Angular, using Angular Material for UI components and Tailwind CSS for styling.
 
 ## Project Structure
 
-These are the core files and folders in the project:    
+These are the core files and folders in the project:
+
 ```
 shelf-help/
 ├── src/
-│   ├── app/                        
-│   │   ├── api/                 
+│   ├── app/
+│   │   ├── api/
 │   │   │   ├── book-api/           # Book API logic and models
 │   │   │   └── library-store/      # State management for the project
-│   │   ├── components/          
+│   │   ├── components/
 │   │   │   ├── book-card/          # Book card component
 │   │   │   ├── navbar/             # Navigation bar component
-│   │   ├── pages/               
+│   │   ├── pages/
 │   │   │   ├── book-catalogue/     # Book catalogue page
 │   │   │   ├── book-details/       # Book details page
 │   │   │   ├── login/              # Login page
@@ -33,9 +35,8 @@ shelf-help/
 This component tree shows the project structure as planned before development. It was created using GraphLenz in VSCode.
 ![alt text](image.png)
 
-The following component tree is generated after development, showing no difference except the external navbar component and color changes illustrating which pages are accessible through routing 
+The following component tree is generated after development, showing no difference except the external navbar component and color changes illustrating which pages are accessible through routing
 ![Component tree](public/image.png)
-
 
 ## Tech stack
 
@@ -45,22 +46,21 @@ The following component tree is generated after development, showing no differen
 - Vitest: A fast and lightweight testing framework for JavaScript and TypeScript, used for unit testing in this project.
 - [Render](https://render.com/): The project uses Render to host an API, providing data to the application. The books delivered by the api is provided as part of the project assignment.
 
+## Running the project (development server)
 
-## Development server
 Before running the project, ensure you have Node.js and npm installed on your machine. You can download them from [Node.js official website](https://nodejs.org/).
 
 You also need to add an environment variable for the API URL. Navigate to src/app/environments and add an environment.ts file with the following content:
 
 ```typescript
 export const environment = {
-  production: false,
-  apiKey: 'void-academy-api-key-123', // Add your API key if needed
-  apiUrl: 'https://frontend-assignment-api-sgtk.onrender.com'
+	production: false,
+	apiKey: 'void-academy-api-key-123', // Add your API key if needed
+	apiUrl: 'https://frontend-assignment-api-sgtk.onrender.com',
 };
 ```
-**Note:** The API key provided is for demonstration purposes. In a real production application, you should secure your API keys and not expose them in the client-side code.
 
-```bash
+**Note:** The API key provided is for demonstration purposes. In a real production application, you should secure your API keys and not expose them in the client-side code.
 
 To run the project locally, first install the project dependencies by running:
 
@@ -76,8 +76,23 @@ ng serve
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-
 ## For developers
+
+### Code formatting and linting
+
+This project uses [Eslint](https://eslint.org/) for linting and [Prettier](https://prettier.io/) for code formatting.
+
+- For linting, run: `npm run lint`
+- For code formatting, run: `npm run format`
+
+> Remember to run linting and formatting before committing your code!
+
+**Configure Prettier in VS Code for automatic formatting on save:**
+
+1. Install the VSCode Prettier extension.
+2. Open settings (Ctrl + ,) and search for "Format On Save".
+3. Enable “Editor: Format On Save”.
+4. Set Prettier as the default formatter: Find "Default formatter" in settings and set it to _Prettier_
 
 ### Building
 
@@ -87,16 +102,17 @@ To build the project run:
 ng build
 ```
 
-This will compile the project and store the build artifacts in the `dist/` directory. 
+This will compile the project and store the build artifacts in the `dist/` directory.
 
 ### Running unit tests
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, run ``ng test``
+To execute unit tests with the [Vitest](https://vitest.dev/) test runner, run `ng test`
 
 ### Running end-to-end tests
+
 > **Note:** End-to-end (e2e) testing is not implemented yet.
 
-For end-to-end (e2e) testing, run: ``ng e2e``
+For end-to-end (e2e) testing, run: `ng e2e`
 
 ### Additional Resources
 
