@@ -103,7 +103,11 @@ export class LibraryStore {
 
 	setCurrentUser(user: User | null) {
 		this.currentUser.set(user);
-		if (user) {
+		if (typeof window === 'undefined' || !window.localStorage) {
+			return;
+		}
+
+		if (user ) {
 			localStorage.setItem('currentUser', JSON.stringify(user));
 		} else {
 			localStorage.removeItem('currentUser');

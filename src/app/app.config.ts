@@ -8,21 +8,22 @@ import { provideKeycloak } from 'keycloak-angular';
 
 export const appConfig: ApplicationConfig = {
 	providers: [
-		...(typeof window !== 'undefined' ?	
-		[
-			provideKeycloak({
-				config: {
-					url: 'https://lemur-17.cloud-iam.com/auth',
-					realm: 'shelf-help',
-					clientId: '1',
-				},
-				initOptions: {
-					onLoad: 'check-sso',
-					silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
-				},
-			}),
-		]
-		: []),
+		...(typeof window !== 'undefined'
+			? [
+				provideKeycloak({
+					config: {
+						url: 'https://lemur-17.cloud-iam.com/auth',
+						realm: 'shelf-help',
+						clientId: 'angular-client',
+					},
+					initOptions: {
+						onLoad: 'check-sso',
+						silentCheckSsoRedirectUri:
+							window.location.origin + '../../public/silent-check-sso.html',
+					},
+				}),
+			]
+			: []),
 		provideBrowserGlobalErrorListeners(),
 		provideRouter(routes),
 		provideClientHydration(withEventReplay()),

@@ -29,7 +29,11 @@ export class Login implements OnInit {
 	}
 
 	login() {
-		typeof window !== 'undefined' && this.keycloakService.login();
+		if (typeof window !== 'undefined' && this.keycloakService && typeof this.keycloakService.login === 'function') {
+			this.keycloakService.login();
+		} else {
+			alert('Keycloak login is not available in this environment.');
+		}
 	}
 
 	onSubmit() {
