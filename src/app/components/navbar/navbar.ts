@@ -1,11 +1,11 @@
 import { Component, inject, effect, signal } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { LibraryStore } from '../../api/library-store';
+import { LibraryStore } from '../../services/api/library-store';
 import { CommonModule, NgIf } from '@angular/common';
 
 import Keycloak, { KeycloakUserInfo } from 'keycloak-js';
 import { KEYCLOAK_EVENT_SIGNAL, KeycloakEventType } from 'keycloak-angular';
-import { User } from '../../api/user-api';
+import { User } from '../../services/api/user-api';
 
 @Component({
 	selector: 'app-navbar',
@@ -61,8 +61,8 @@ export class Navbar {
 							},
 						});
 					} else {
-                        console.error("userInfo or userInfo['sub'] is null")
-                    }
+						console.error("userInfo or userInfo['sub'] is null");
+					}
 				});
 			}
 		});

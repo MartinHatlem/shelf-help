@@ -1,6 +1,6 @@
 import { inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
 import { BookApi, Book, CreateBook } from './book-api';
-import { UserApi, User } from './user-api';
+import { UserApi, User } from '../api/user-api';
 
 @Injectable({
 	providedIn: 'root',
@@ -54,7 +54,7 @@ export class LibraryStore {
 	getUserById(id: string) {
 		// this.usersLoading.set(true);
 		// this.usersError.set(null);
-		return this.userApi.loadUserById(id)
+		return this.userApi.loadUserById(id);
 		// .subscribe({
 		// 	next: (user) => {
 		// 		this.setCurrentUser(user);
@@ -103,7 +103,7 @@ export class LibraryStore {
 
 	setCurrentUser(user: User | null) {
 		this.currentUser.set(user);
-		if (user ) {
+		if (user) {
 			localStorage.setItem('currentUser', JSON.stringify(user));
 		} else {
 			localStorage.removeItem('currentUser');
@@ -159,15 +159,15 @@ export class LibraryStore {
 		});
 	}
 
-     addBook(book: CreateBook) {
-    this.bookApi.addBook(book).subscribe({
-      next: (newBook) => {
-        this.books.update(books => [...books, newBook]);
-      },
-      error: () => {
-        this.booksError.set('Failed to add book');
-        this.booksLoading.set(false);
-      },
-    });
-  }
+	addBook(book: CreateBook) {
+		this.bookApi.addBook(book).subscribe({
+			next: (newBook) => {
+				this.books.update((books) => [...books, newBook]);
+			},
+			error: () => {
+				this.booksError.set('Failed to add book');
+				this.booksLoading.set(false);
+			},
+		});
+	}
 }

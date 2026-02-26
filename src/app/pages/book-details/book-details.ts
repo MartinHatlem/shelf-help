@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { LibraryStore } from '../../api/library-store';
+import { LibraryStore } from '../../services/api/library-store';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

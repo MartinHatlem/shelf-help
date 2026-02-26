@@ -1,5 +1,5 @@
 import { CanActivateFn } from '@angular/router';
-import { LibraryStore } from '../../api/library-store';
+import { LibraryStore } from '../../services/api/library-store';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import Keycloak from 'keycloak-js';

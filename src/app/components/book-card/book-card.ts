@@ -1,11 +1,10 @@
 import { Component, computed, inject, Input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { Book } from '../../api/book-api';
+import { Book } from '../../services/api/book-api';
 import { RouterLink } from '@angular/router';
-import { LibraryStore } from '../../api/library-store';
+import { LibraryStore } from '../../services/api/library-store';
 import Keycloak from 'keycloak-js';
-
 
 @Component({
 	selector: 'app-book-card',
