@@ -5,5 +5,9 @@
 			<input matInput [(ngModel)]="name" name="name" />
 		</mat-form-field>
 		<button (click)="login()">Log in</button>
+		<button (click)="logout()">Log out</button>
+		@if (authenticated) {
+			<p>Yeah dude! It workeds</p>
+		}
 	</section>
 </div>
