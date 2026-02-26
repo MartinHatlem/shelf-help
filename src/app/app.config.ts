@@ -10,19 +10,19 @@ export const appConfig: ApplicationConfig = {
 	providers: [
 		...(typeof window !== 'undefined'
 			? [
-				provideKeycloak({
-					config: {
-						url: 'https://lemur-17.cloud-iam.com/auth',
-						realm: 'shelf-help',
-						clientId: 'angular-client',
-					},
-					initOptions: {
-						onLoad: 'check-sso',
-						silentCheckSsoRedirectUri:
-							window.location.origin + '../../public/silent-check-sso.html',
-					},
-				}),
-			]
+					provideKeycloak({
+						config: {
+							url: 'https://lemur-0.cloud-iam.com/auth',
+							realm: 'keycloakmvp',
+							clientId: 'Keycloak-ml',
+						},
+						initOptions: {
+							onLoad: 'check-sso',
+							silentCheckSsoRedirectUri:
+								window.location.origin + '../../public/silent-check-sso.html',
+						},
+					}),
+				]
 			: []),
 		provideBrowserGlobalErrorListeners(),
 		provideRouter(routes),

@@ -5,18 +5,18 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { LibraryStore } from '../../api/library-store';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+import Keycloak from 'keycloak-js';
 
 @Component({
 	selector: 'app-login',
-	imports: [MatFormFieldModule, MatInputModule, MatSelectModule, FormsModule, KeycloakAngularModule],
+	imports: [MatFormFieldModule, MatInputModule, MatSelectModule, FormsModule],
 	templateUrl: './login.html',
 	styleUrl: './login.css',
 })
 export class Login implements OnInit {
 	private store = inject(LibraryStore);
 	private router = inject(Router);
-	private keycloakService = inject(KeycloakService);
+	private keycloak = inject(Keycloak);
 
 	name = '';
 	users = this.store.users;
@@ -29,8 +29,8 @@ export class Login implements OnInit {
 	}
 
 	login() {
-		if (typeof window !== 'undefined' && this.keycloakService && typeof this.keycloakService.login === 'function') {
-			this.keycloakService.login();
+		if (typeof window !== 'undefined') {
+			this.keycloak.login();
 		} else {
 			alert('Keycloak login is not available in this environment.');
 		}
