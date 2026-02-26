@@ -5,6 +5,7 @@ import { LibraryStore } from '../../services/api/library-store';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth/auth-service';
 
 @Component({
 	selector: 'app-book-catalogue',
@@ -14,5 +15,6 @@ import { RouterLink } from '@angular/router';
 })
 export class BookCatalogue {
 	libraryStore = inject(LibraryStore);
+	authService = inject(AuthService);
 	books = this.libraryStore.books;
 }

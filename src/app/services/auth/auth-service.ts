@@ -42,4 +42,7 @@ export class AuthService {
 			}
 		});
 	}
+    hasRole(role: string) {
+		return this.keycloak.tokenParsed?.realm_access?.roles?.includes(role);
+    }
 }
