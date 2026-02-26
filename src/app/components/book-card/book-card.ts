@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Book } from '../../services/api/book-api';
 import { RouterLink } from '@angular/router';
 import { LibraryStore } from '../../services/api/library-store';
-import Keycloak from 'keycloak-js';
+import { AuthService } from '../../services/auth/auth-service';
 
 @Component({
 	selector: 'app-book-card',
@@ -16,7 +16,7 @@ export class BookCard {
 	@Input() book!: Book;
 
 	store = inject(LibraryStore);
-	private readonly keycloak = inject(Keycloak);
+	private readonly authService = inject(AuthService);
 
 	readonly favorite = computed(() => {
 		const user = this.store.currentUser();
@@ -25,7 +25,7 @@ export class BookCard {
 
 	toggleFavorite() {
 		const user = this.store.currentUser();
-		if (!this.keycloak.authenticated) {
+		if (!this.authService.authenticated()) {
 			alert('Please log in to manage your reading list!');
 			return;
 		}

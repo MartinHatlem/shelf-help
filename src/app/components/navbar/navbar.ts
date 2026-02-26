@@ -6,6 +6,7 @@ import { CommonModule, NgIf } from '@angular/common';
 import Keycloak, { KeycloakUserInfo } from 'keycloak-js';
 import { KEYCLOAK_EVENT_SIGNAL, KeycloakEventType } from 'keycloak-angular';
 import { User } from '../../services/api/user-api';
+import { AuthService } from '../../services/auth/auth-service';
 
 @Component({
 	selector: 'app-navbar',
@@ -15,6 +16,7 @@ import { User } from '../../services/api/user-api';
 })
 export class Navbar {
 	private libraryStore = inject(LibraryStore);
+	protected authService = inject(AuthService)
 	user = this.libraryStore.currentUser;
 
 	private userInfo: KeycloakUserInfo | null = null;
@@ -92,4 +94,6 @@ export class Navbar {
 		const username = user.username.charAt(0).toUpperCase() + user.username.slice(1);
 		return username;
 	}
+
+	authenticated = signal(this.authService.authenticated())
 }
