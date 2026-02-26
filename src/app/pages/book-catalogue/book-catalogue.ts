@@ -14,5 +14,5 @@ import { RouterLink } from '@angular/router';
 })
 export class BookCatalogue {
 	libraryStore = inject(LibraryStore);
-	books = this.libraryStore.books();
+	books = this.libraryStore.books;
 }
