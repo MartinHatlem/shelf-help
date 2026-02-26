@@ -19,7 +19,6 @@ shelf-help/
 │   │   ├── pages/
 │   │   │   ├── book-catalogue/     # Book catalogue page
 │   │   │   ├── book-details/       # Book details page
-│   │   │   ├── login/              # Login page
 │   │   │   ├── reading-list/       # User's reading list page
 │   │   ├── environments/           # Providing API key and URL
 │   │   ├── app.routes              # Application routing configuration

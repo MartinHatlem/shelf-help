@@ -9,7 +9,8 @@ export const authGuard: CanActivateFn = () => {
 	const isAuthenticated = libraryStore.currentUser() !== null;
 
 	if (!isAuthenticated) {
-		router.navigate(['/login']);
+		alert('You need to be logged in to access this page.');
+		router.navigate(['/']);
 	}
 	return isAuthenticated;
 };

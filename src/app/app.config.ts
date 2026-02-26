@@ -7,22 +7,18 @@ import { provideKeycloak } from 'keycloak-angular';
 
 export const appConfig: ApplicationConfig = {
 	providers: [
-		...(typeof window !== 'undefined'
-			? [
-					provideKeycloak({
-						config: {
-							url: 'https://lemur-0.cloud-iam.com/auth',
-							realm: 'keycloakmvp',
-							clientId: 'Keycloak-ml',
-						},
-						initOptions: {
-							onLoad: 'check-sso',
-							silentCheckSsoRedirectUri:
-								window.location.origin + '/silent-check-sso.html',
-						},
-					}),
-				]
-			: []),
+		provideKeycloak({
+			config: {
+				url: 'https://lemur-0.cloud-iam.com/auth',
+				realm: 'keycloakmvp',
+				clientId: 'Keycloak-ml',
+			},
+			initOptions: {
+				onLoad: 'check-sso',
+				silentCheckSsoRedirectUri:
+					window.location.origin + '/silent-check-sso.html',
+			},
+		}),
 		provideBrowserGlobalErrorListeners(),
 		provideRouter(routes),
 		provideHttpClient(),
