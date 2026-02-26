@@ -25,6 +25,7 @@ export class BookCard {
 	});
 
 	toggleFavorite() {
+		const user = this.store.currentUser();
 		if (!this.keycloak.authenticated) {
 			alert('Please log in to manage your reading list!');
 			return;

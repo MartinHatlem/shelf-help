@@ -1,6 +1,6 @@
 import { inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
 import { BookApi, Book, CreateBook } from './book-api';
-import { UserApi, User, CreateUser } from './user-api';
+import { UserApi, User } from './user-api';
 
 @Injectable({
 	providedIn: 'root',
@@ -51,19 +51,20 @@ export class LibraryStore {
 		});
 	}
 
-	getUserById(id: number) {
-		this.usersLoading.set(true);
-		this.usersError.set(null);
-		this.userApi.loadUserById(id).subscribe({
-			next: (user) => {
-				this.setCurrentUser(user);
-				this.usersLoading.set(false);
-			},
-			error: () => {
-				this.usersError.set('Failed to load user');
-				this.usersLoading.set(false);
-			},
-		});
+	getUserById(id: string) {
+		// this.usersLoading.set(true);
+		// this.usersError.set(null);
+		return this.userApi.loadUserById(id)
+		// .subscribe({
+		// 	next: (user) => {
+		// 		this.setCurrentUser(user);
+		// 		this.usersLoading.set(false);
+		// 	},
+		// 	error: () => {
+		// 		this.usersError.set('Failed to load user');
+		// 		this.usersLoading.set(false);
+		// 	},
+		// });
 	}
 
 	getBookById(id: number) {
@@ -86,7 +87,7 @@ export class LibraryStore {
 		return this.currentBook;
 	}
 
-	addUser(user: CreateUser) {
+	addUser(user: User) {
 		this.userApi.addUser(user).subscribe({
 			next: (newUser) => {
 				this.users.update((users) => [...users, newUser]);

@@ -3,7 +3,9 @@ import { Router, RouterModule } from '@angular/router';
 import { LibraryStore } from '../../api/library-store';
 import { CommonModule, NgIf } from '@angular/common';
 
-import Keycloak from 'keycloak-js';
+import Keycloak, { KeycloakUserInfo } from 'keycloak-js';
+import { KEYCLOAK_EVENT_SIGNAL, KeycloakEventType } from 'keycloak-angular';
+import { User } from '../../api/user-api';
 
 @Component({
 	selector: 'app-navbar',
@@ -14,27 +16,71 @@ import Keycloak from 'keycloak-js';
 export class Navbar {
 	private libraryStore = inject(LibraryStore);
 	user = this.libraryStore.currentUser;
+
+	private userInfo: KeycloakUserInfo | null = null;
+
 	keycloakUsername = signal('');
-
 	protected readonly keycloak = inject(Keycloak);
+	private readonly keycloakSignal = inject(KEYCLOAK_EVENT_SIGNAL);
 
-    updateUsername() {
-        this.keycloak.loadUserInfo().then((userInfo) => {
-				this.keycloakUsername.set(userInfo['name'] || '');
+	constructor() {
+		this.updateUsername();
+
+		// Logger vi inn
+		// Hent brukerinfo
+		// Sjekk om bruker finnes i api
+		// Lage eller koble til bruker i api
+
+		effect(() => {
+			const keycloakEvent = this.keycloakSignal();
+
+			if (keycloakEvent.type === KeycloakEventType.Ready) {
+				// If they just logged in
+
+				this.keycloak.loadUserInfo().then((userInfo) => {
+					// Hent brukerinfo
+					this.userInfo = userInfo;
+
+					// Lage bruker hvis den ikke finnes i api
+					if (this.userInfo && this.userInfo['sub']) {
+						// Sjekk om den finnes i api
+						this.libraryStore.getUserById(userInfo['sub']).subscribe({
+							next: (user) => {
+								// we good
+								this.libraryStore.setCurrentUser(user);
+							},
+							error: () => {
+								// No user in api. Lag en
+								const user: User = {
+									id: this.userInfo!['sub'],
+									username: this.userInfo!['preferred_username'],
+									collection: [],
+								};
+								this.libraryStore.addUser(user);
+								this.libraryStore.setCurrentUser(user);
+							},
+						});
+					} else {
+                        console.error("userInfo or userInfo['sub'] is null")
+                    }
+				});
+			}
 		});
-    }
+	}
 
-    constructor() {
-        this.updateUsername();
-    }
+	updateUsername() {
+		this.keycloak.loadUserInfo().then((userInfo) => {
+			this.keycloakUsername.set(userInfo['name'] || '');
+		});
+	}
 
 	login() {
 		this.keycloak.login();
-        this.updateUsername();
+		this.updateUsername();
 	}
 	logout() {
 		this.keycloak.logout();
-        this.keycloakUsername.set('');
+		this.keycloakUsername.set('');
 	}
 
 	getUsername(): string {
