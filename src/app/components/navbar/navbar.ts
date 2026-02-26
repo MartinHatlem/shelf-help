@@ -4,12 +4,6 @@ import { LibraryStore } from '../../api/library-store';
 import { CommonModule, NgIf } from '@angular/common';
 
 import Keycloak from 'keycloak-js';
-import {
-	KEYCLOAK_EVENT_SIGNAL,
-	KeycloakEventType,
-	typeEventArgs,
-	ReadyArgs,
-} from 'keycloak-angular';
 
 @Component({
 	selector: 'app-navbar',
@@ -18,41 +12,29 @@ import {
 	styleUrl: './navbar.css',
 })
 export class Navbar {
-	private router = inject(Router);
 	private libraryStore = inject(LibraryStore);
 	user = this.libraryStore.currentUser;
-
-	authenticated = false;
-	keycloakStatus: string | undefined;
 	keycloakUsername = signal('');
 
-	private readonly keycloak = inject(Keycloak);
-	private readonly keycloakSignal = inject(KEYCLOAK_EVENT_SIGNAL);
+	protected readonly keycloak = inject(Keycloak);
 
-	constructor() {
-		effect(() => {
-			const keycloakEvent = this.keycloakSignal();
-
-			this.keycloakStatus = keycloakEvent.type;
-
-			if (keycloakEvent.type === KeycloakEventType.Ready) {
-				this.authenticated = typeEventArgs<ReadyArgs>(keycloakEvent.args);
-			}
-
-			if (keycloakEvent.type === KeycloakEventType.AuthLogout) {
-				this.authenticated = false;
-			}
-			this.keycloak.loadUserInfo().then((userInfo) => {
+    updateUsername() {
+        this.keycloak.loadUserInfo().then((userInfo) => {
 				this.keycloakUsername.set(userInfo['name'] || '');
-			});
 		});
-	}
+    }
+
+    constructor() {
+        this.updateUsername();
+    }
 
 	login() {
 		this.keycloak.login();
+        this.updateUsername();
 	}
 	logout() {
 		this.keycloak.logout();
+        this.keycloakUsername.set('');
 	}
 
 	getUsername(): string {

@@ -1,14 +1,14 @@
 <nav class="flex gap-4 sm:gap-8 p-4 bg-dark-matcha text-white justify-center">
 	<a class="absolute left-8 text-white cursor-default">
-		{{ authenticated ? 'Hi, ' + keycloakUsername() + '!' : '' }}
+		{{ keycloak.authenticated ? 'Hi, ' + keycloakUsername() + '!' : '' }}
 	</a>
 	<a routerLink="/">Catalogue</a>
 	<a
 		routerLink="/reading-list"
-		[class]="user() === null ? 'cursor-default text-white opacity-50' : 'opacity-100'"
+		[class]="!keycloak.authenticated && 'cursor-default text-white opacity-50'"
 	>
 		Reading List
 	</a>
-	<a *ngIf="!authenticated" class="absolute right-8" (click)="login()">Login</a>
-	<a *ngIf="authenticated" class="absolute right-8" (click)="logout()">Logout</a>
+	<a *ngIf="!keycloak.authenticated" class="absolute right-8" (click)="login()">Login</a>
+	<a *ngIf="keycloak.authenticated" class="absolute right-8" (click)="logout()">Logout</a>
 </nav>
