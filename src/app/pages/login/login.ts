@@ -56,15 +56,9 @@ export class Login implements OnInit {
 	}
 
 	login() {
-		// if (typeof window === 'undefined') {
-		// 	return;
-		// }
 		this.keycloak.login();
 	}
 	logout() {
-		// if (typeof window === 'undefined') {
-		// 	return;
-		// }
 		this.keycloak.logout();
 	}
 

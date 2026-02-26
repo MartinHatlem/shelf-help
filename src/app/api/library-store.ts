@@ -1,5 +1,4 @@
 import { inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
 import { BookApi, Book, CreateBook } from './book-api';
 import { UserApi, User, CreateUser } from './user-api';
 
@@ -103,10 +102,6 @@ export class LibraryStore {
 
 	setCurrentUser(user: User | null) {
 		this.currentUser.set(user);
-		if (typeof window === 'undefined' || !window.localStorage) {
-			return;
-		}
-
 		if (user ) {
 			localStorage.setItem('currentUser', JSON.stringify(user));
 		} else {
@@ -116,14 +111,10 @@ export class LibraryStore {
 	}
 
 	loadCurrentUser() {
-		if (typeof window === 'undefined' || !window.localStorage) {
-			console.warn('Be aware: LocalStorage is not available on server side rendering.');
-		} else {
-			const storedUser = localStorage.getItem('currentUser') || null;
-			console.log('Stored user on init:', storedUser);
-			if (storedUser) {
-				this.setCurrentUser(JSON.parse(storedUser));
-			}
+		const storedUser = localStorage.getItem('currentUser') || null;
+		console.log('Stored user on init:', storedUser);
+		if (storedUser) {
+			this.setCurrentUser(JSON.parse(storedUser));
 		}
 	}
 
