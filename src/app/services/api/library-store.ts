@@ -52,19 +52,7 @@ export class LibraryStore {
 	}
 
 	getUserById(id: string) {
-		// this.usersLoading.set(true);
-		// this.usersError.set(null);
 		return this.userApi.loadUserById(id);
-		// .subscribe({
-		// 	next: (user) => {
-		// 		this.setCurrentUser(user);
-		// 		this.usersLoading.set(false);
-		// 	},
-		// 	error: () => {
-		// 		this.usersError.set('Failed to load user');
-		// 		this.usersLoading.set(false);
-		// 	},
-		// });
 	}
 
 	getBookById(id: number) {
@@ -101,14 +89,16 @@ export class LibraryStore {
 		});
 	}
 
-	setCurrentUser(user: User | null) {
+	setCurrentUser(user: User) {
 		this.currentUser.set(user);
-		if (user) {
-			localStorage.setItem('currentUser', JSON.stringify(user));
-		} else {
-			localStorage.removeItem('currentUser');
-		}
+		localStorage.setItem('currentUser', JSON.stringify(user));
 		console.log('Current user set to:', user);
+	}
+
+	removeCurrentUser() {
+		this.currentUser.set(null);
+		localStorage.removeItem('currentUser');
+		console.log("Current user removed")
 	}
 
 	loadCurrentUser() {

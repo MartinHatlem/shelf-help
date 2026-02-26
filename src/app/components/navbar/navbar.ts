@@ -1,11 +1,10 @@
 import { Component, inject, effect, signal } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { LibraryStore } from '../../services/api/library-store';
 import { CommonModule, NgIf } from '@angular/common';
 
-import Keycloak, { KeycloakUserInfo } from 'keycloak-js';
+import Keycloak from 'keycloak-js';
 import { KEYCLOAK_EVENT_SIGNAL, KeycloakEventType } from 'keycloak-angular';
-import { User } from '../../services/api/user-api';
 import { AuthService } from '../../services/auth/auth-service';
 
 @Component({
@@ -28,7 +27,6 @@ export class Navbar {
 
 		effect(() => {
 			const keycloakEvent = this.keycloakSignal();
-
 			// If they just logged in, connect to (or create) user in backend
 			if (keycloakEvent.type === KeycloakEventType.Ready) {
 				this.authService.connectUserToBackend();
@@ -47,6 +45,8 @@ export class Navbar {
 		this.updateUsername();
 	}
 	logout() {
+		// TODO: This doesn't follow the single success/fail db principle thing. Fix that?
+		this.libraryStore.removeCurrentUser();
 		this.keycloak.logout();
 		this.keycloakUsername.set('');
 	}
