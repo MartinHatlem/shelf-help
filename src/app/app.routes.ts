@@ -6,8 +6,8 @@ import { authGuard } from './guards/auth-guard/auth-guard';
 import { BookForm } from './components/book-form/book-form';
 
 export const routes: Routes = [
-  { path: '', component: BookCatalogue },
-  { path: 'book-details/:id', component: BookDetails },
-  { path: 'reading-list', component: ReadingList, canActivate: [authGuard] },
-  { path: 'add-book', component: BookForm, canActivate: [authGuard] },
+	{ path: '', component: BookCatalogue },
+	{ path: 'book-details/:id', component: BookDetails },
+	{ path: 'reading-list', component: ReadingList, canActivate: [authGuard] },
+	{ path: 'add-book', component: BookForm, canActivate: [authGuard] },
 ];

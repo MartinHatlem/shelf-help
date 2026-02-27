@@ -1,4 +1,4 @@
-import { inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { BookApi, Book, CreateBook } from './book-api';
 import { UserApi, User } from '../api/user-api';
 
@@ -98,7 +98,7 @@ export class LibraryStore {
 	removeCurrentUser() {
 		this.currentUser.set(null);
 		localStorage.removeItem('currentUser');
-		console.log("Current user removed")
+		console.log('Current user removed');
 	}
 
 	loadCurrentUser() {

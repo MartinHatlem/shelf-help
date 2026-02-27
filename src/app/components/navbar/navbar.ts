@@ -15,7 +15,7 @@ import { AuthService } from '../../services/auth/auth-service';
 })
 export class Navbar {
 	private libraryStore = inject(LibraryStore);
-	protected authService = inject(AuthService)
+	protected authService = inject(AuthService);
 	user = this.libraryStore.currentUser;
 
 	keycloakUsername = signal('');
@@ -61,5 +61,12 @@ export class Navbar {
 		return username;
 	}
 
-	authenticated = signal(this.authService.authenticated())
+	onKeydown(event: KeyboardEvent, func: () => void) {
+		if (event.key === 'Enter' || event.key === ' ') {
+			func();
+			event.preventDefault();
+		}
+	}
+
+	authenticated = signal(this.authService.authenticated());
 }
