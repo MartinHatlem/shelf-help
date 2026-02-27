@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import Keycloak from 'keycloak-js';
+import Keycloak, { KeycloakUserInfo } from 'keycloak-js';
 import { LibraryStore } from '../api/library-store';
 import { User } from '../api/user-api';
 
@@ -8,41 +8,44 @@ import { User } from '../api/user-api';
 })
 export class AuthService {
 	private readonly keycloak = inject(Keycloak);
-    private libraryStore = inject(LibraryStore);
-    
+	private libraryStore = inject(LibraryStore);
+
 	authenticated() {
 		return this.keycloak.authenticated;
 	}
 
 	connectUserToBackend() {
 		this.keycloak.loadUserInfo().then((userInfo) => {
-			// Hent brukerinfo
-
-			// Lage bruker hvis den ikke finnes i api
-			if (userInfo && userInfo['sub']) {
-				// Sjekk om den finnes i api
-				this.libraryStore.getUserById(userInfo['sub']).subscribe({
-					next: (user) => {
-						// we good
-						this.libraryStore.setCurrentUser(user);
-					},
-					error: () => {
-						// No user in api. Lag en
-						const user: User = {
-							id: userInfo!['sub'],
-							username: userInfo!['preferred_username'],
-							collection: [],
-						};
-						this.libraryStore.addUser(user);
-						this.libraryStore.setCurrentUser(user);
-					},
-				});
-			} else {
+			if (!userInfo || !userInfo['sub']) {
 				console.error("userInfo or userInfo['sub'] is null");
+				return;
 			}
+
+			// Check if user from keycloak already exists in db
+			this.libraryStore.getUserById(userInfo['sub']).subscribe({
+				next: (user) => {
+					this.libraryStore.setCurrentUser(user);
+				},
+				error: () => {
+					// No user in api. Make one
+					const user = this.createUser(userInfo);
+					this.libraryStore.addUser(user);
+					this.libraryStore.setCurrentUser(user);
+				},
+			});
 		});
 	}
-    hasRole(role: string) {
+
+	hasRole(role: string) {
 		return this.keycloak.tokenParsed?.realm_access?.roles?.includes(role);
-    }
+	}
+
+	private createUser(userInfo: KeycloakUserInfo) {
+		const user: User = {
+			id: userInfo!['sub'],
+			username: userInfo!['preferred_username'],
+			collection: [],
+		};
+		return user;
+	}
 }
