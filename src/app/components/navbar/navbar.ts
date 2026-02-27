@@ -1,30 +1,85 @@
-import { Component, inject} from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
-import { LibraryStore } from '../../api/library-store';
+import { Component, inject, effect, signal } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { LibraryStore } from '../../services/api/library-store';
 import { CommonModule, NgIf } from '@angular/common';
 
+import Keycloak from 'keycloak-js';
+import { KEYCLOAK_EVENT_SIGNAL, KeycloakEventType } from 'keycloak-angular';
+import { AuthService } from '../../services/auth/auth-service';
+
 @Component({
-  selector: 'app-navbar',
-  imports: [RouterModule, CommonModule, NgIf],
-  templateUrl: './navbar.html',
-  styleUrl: './navbar.css',
+	selector: 'app-navbar',
+	imports: [RouterModule, CommonModule, NgIf],
+	templateUrl: './navbar.html',
+	styleUrl: './navbar.css',
 })
 export class Navbar {
-  private router = inject(Router);
-  private libraryStore = inject(LibraryStore);
-  user = this.libraryStore.currentUser;
+	private libraryStore = inject(LibraryStore);
+	protected authService = inject(AuthService);
+	user = this.libraryStore.currentUser;
 
-  getUsername(): string {
-    const user = this.user();
-    if (!user) {
-      return "Not logged in";
-    }
+	keycloakUsername = signal('');
+	protected readonly keycloak = inject(Keycloak);
+	private readonly keycloakSignal = inject(KEYCLOAK_EVENT_SIGNAL);
 
-    const username = user.username.charAt(0).toUpperCase() + user.username.slice(1);
-    return username;
-  }
+	constructor() {
+		this.updateUsername();
 
-  isLoginPage(): boolean {
-    return this.router.url === '/login';
-  }
+		effect(() => {
+			const keycloakEvent = this.keycloakSignal();
+
+			if (keycloakEvent.type === KeycloakEventType.Ready) {
+				if (this.keycloak.authenticated) {
+					// Login
+					this.authService.connectUserToBackend();
+				} else {
+					// Logout
+					this.libraryStore.removeCurrentUser();
+					this.keycloakUsername.set('');
+				}
+			}
+		});
+	}
+
+	updateUsername() {
+		this.keycloak
+			.loadUserInfo()
+			.then((userInfo) => {
+				if (userInfo['name']) {
+					this.keycloakUsername.set(userInfo['name']);
+				} else {
+					this.keycloakUsername.set('');
+				}
+			})
+			.catch(() => {
+				this.keycloakUsername.set('');
+			});
+	}
+
+	login() {
+		this.keycloak.login();
+		this.updateUsername();
+	}
+	logout() {
+		this.keycloak.logout();
+	}
+
+	getUsername(): string {
+		const user = this.user();
+		if (!user) {
+			return 'Not logged in';
+		}
+
+		const username = user.username.charAt(0).toUpperCase() + user.username.slice(1);
+		return username;
+	}
+
+	onKeydown(event: KeyboardEvent, func: () => void) {
+		if (event.key === 'Enter' || event.key === ' ') {
+			func();
+			event.preventDefault();
+		}
+	}
+
+	authenticated = signal(this.authService.authenticated());
 }

@@ -1,8 +1,31 @@
 <nav class="flex gap-4 sm:gap-8 p-4 bg-dark-matcha text-white justify-center">
-    <a class="absolute left-8 text-white cursor-default" > {{(user() !== null) ? 'Hi, ' + getUsername() + '!': ''}}</a>
-    <a routerLink="/">Catalogue</a>
-    <a routerLink="/reading-list" [class]="user() === null ? 'cursor-default text-primary opacity-50' : 'opacity-100' ">
-    	Reading List
-    </a>
-    <a class="absolute right-8" *ngIf="!isLoginPage()" routerLink="/login"> {{(user() !== null) ? 'Logout' : 'Login'}}</a>
+	<a class="absolute left-8 text-white cursor-default">
+		{{ authenticated() ? 'Hi, ' + keycloakUsername() + '!' : '' }}
+	</a>
+	<a routerLink="/">Catalogue</a>
+	<a
+		routerLink="/reading-list"
+		[class]="!authenticated() && 'cursor-default text-white opacity-50'"
+		[tabIndex]="authenticated() ? 0 : -1"
+	>
+		Reading List
+	</a>
+	<a
+		*ngIf="!authenticated()"
+		class="absolute right-8"
+		tabindex="0"
+		(click)="login()"
+		(keydown.enter)="login()"
+		(keydown.space)="login()"
+		>Login</a
+	>
+	<a
+		*ngIf="authenticated()"
+		class="absolute right-8"
+		tabindex="0"
+		(click)="logout()"
+		(keydown.enter)="logout()"
+		(keydown.space)="logout()"
+		>Logout</a
+	>
 </nav>

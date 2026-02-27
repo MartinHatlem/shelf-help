@@ -1,7 +1,6 @@
-import { inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { inject, Injectable, signal } from '@angular/core';
 import { BookApi, Book, CreateBook } from './book-api';
-import { UserApi, User, CreateUser } from './user-api';
+import { UserApi, User } from '../api/user-api';
 
 @Injectable({
 	providedIn: 'root',
@@ -52,19 +51,8 @@ export class LibraryStore {
 		});
 	}
 
-	getUserById(id: number) {
-		this.usersLoading.set(true);
-		this.usersError.set(null);
-		this.userApi.loadUserById(id).subscribe({
-			next: (user) => {
-				this.setCurrentUser(user);
-				this.usersLoading.set(false);
-			},
-			error: () => {
-				this.usersError.set('Failed to load user');
-				this.usersLoading.set(false);
-			},
-		});
+	getUserById(id: string) {
+		return this.userApi.loadUserById(id);
 	}
 
 	getBookById(id: number) {
@@ -87,7 +75,7 @@ export class LibraryStore {
 		return this.currentBook;
 	}
 
-	addUser(user: CreateUser) {
+	addUser(user: User) {
 		this.userApi.addUser(user).subscribe({
 			next: (newUser) => {
 				this.users.update((users) => [...users, newUser]);
@@ -101,25 +89,23 @@ export class LibraryStore {
 		});
 	}
 
-	setCurrentUser(user: User | null) {
+	setCurrentUser(user: User) {
 		this.currentUser.set(user);
-		if (user) {
-			localStorage.setItem('currentUser', JSON.stringify(user));
-		} else {
-			localStorage.removeItem('currentUser');
-		}
+		localStorage.setItem('currentUser', JSON.stringify(user));
 		console.log('Current user set to:', user);
 	}
 
+	removeCurrentUser() {
+		this.currentUser.set(null);
+		localStorage.removeItem('currentUser');
+		console.log('Current user removed');
+	}
+
 	loadCurrentUser() {
-		if (typeof window === 'undefined' || !window.localStorage) {
-			console.warn('Be aware: LocalStorage is not available on server side rendering.');
-		} else {
-			const storedUser = localStorage.getItem('currentUser') || null;
-			console.log('Stored user on init:', storedUser);
-			if (storedUser) {
-				this.setCurrentUser(JSON.parse(storedUser));
-			}
+		const storedUser = localStorage.getItem('currentUser') || null;
+		console.log('Stored user on init:', storedUser);
+		if (storedUser) {
+			this.setCurrentUser(JSON.parse(storedUser));
 		}
 	}
 
@@ -163,15 +149,15 @@ export class LibraryStore {
 		});
 	}
 
-     addBook(book: CreateBook) {
-    this.bookApi.addBook(book).subscribe({
-      next: (newBook) => {
-        this.books.update(books => [...books, newBook]);
-      },
-      error: () => {
-        this.booksError.set('Failed to add book');
-        this.booksLoading.set(false);
-      },
-    });
-  }
+	addBook(book: CreateBook) {
+		this.bookApi.addBook(book).subscribe({
+			next: (newBook) => {
+				this.books.update((books) => [...books, newBook]);
+			},
+			error: () => {
+				this.booksError.set('Failed to add book');
+				this.booksLoading.set(false);
+			},
+		});
+	}
 }

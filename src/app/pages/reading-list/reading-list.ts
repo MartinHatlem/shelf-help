@@ -1,6 +1,6 @@
 import { Component, computed, inject } from '@angular/core';
 import { BookCard } from '../../components/book-card/book-card';
-import { LibraryStore } from '../../api/library-store';
+import { LibraryStore } from '../../services/api/library-store';
 import { CommonModule } from '@angular/common';
 
 @Component({

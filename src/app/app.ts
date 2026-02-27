@@ -1,7 +1,7 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Navbar } from './components/navbar/navbar';
-import { LibraryStore } from './api/library-store';
+import { LibraryStore } from './services/api/library-store';
 
 @Component({
 	selector: 'app-root',
