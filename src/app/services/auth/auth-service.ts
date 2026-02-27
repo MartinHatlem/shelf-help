@@ -15,25 +15,30 @@ export class AuthService {
 	}
 
 	connectUserToBackend() {
-		this.keycloak.loadUserInfo().then((userInfo) => {
-			if (!userInfo || !userInfo['sub']) {
-				console.error("userInfo or userInfo['sub'] is null");
-				return;
-			}
+		this.keycloak
+			.loadUserInfo()
+			.then((userInfo) => {
+				if (!userInfo || !userInfo['sub']) {
+					console.error("userInfo or userInfo['sub'] is null");
+					return;
+				}
 
-			// Check if user from keycloak already exists in db
-			this.libraryStore.getUserById(userInfo['sub']).subscribe({
-				next: (user) => {
-					this.libraryStore.setCurrentUser(user);
-				},
-				error: () => {
-					// No user in api. Make one
-					const user = this.createUser(userInfo);
-					this.libraryStore.addUser(user);
-					this.libraryStore.setCurrentUser(user);
-				},
+				// Check if user from keycloak already exists in db
+				this.libraryStore.getUserById(userInfo['sub']).subscribe({
+					next: (user) => {
+						this.libraryStore.setCurrentUser(user);
+					},
+					error: () => {
+						// No user in api. Make one
+						const user = this.createUser(userInfo);
+						this.libraryStore.addUser(user);
+						this.libraryStore.setCurrentUser(user);
+					},
+				});
+			})
+			.catch(() => {
+				// If it couldn't load user info (e.g. on logout)
 			});
-		});
 	}
 
 	hasRole(role: string) {

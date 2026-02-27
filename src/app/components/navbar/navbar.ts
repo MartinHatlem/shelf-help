@@ -27,17 +27,33 @@ export class Navbar {
 
 		effect(() => {
 			const keycloakEvent = this.keycloakSignal();
-			// If they just logged in, connect to (or create) user in backend
+
 			if (keycloakEvent.type === KeycloakEventType.Ready) {
-				this.authService.connectUserToBackend();
+				if (this.keycloak.authenticated) {
+					// Login
+					this.authService.connectUserToBackend();
+				} else {
+					// Logout
+					this.libraryStore.removeCurrentUser();
+					this.keycloakUsername.set('');
+				}
 			}
 		});
 	}
 
 	updateUsername() {
-		this.keycloak.loadUserInfo().then((userInfo) => {
-			this.keycloakUsername.set(userInfo['name'] || '');
-		});
+		this.keycloak
+			.loadUserInfo()
+			.then((userInfo) => {
+				if (userInfo['name']) {
+					this.keycloakUsername.set(userInfo['name']);
+				} else {
+					this.keycloakUsername.set('');
+				}
+			})
+			.catch(() => {
+				this.keycloakUsername.set('');
+			});
 	}
 
 	login() {
@@ -45,10 +61,7 @@ export class Navbar {
 		this.updateUsername();
 	}
 	logout() {
-		// TODO: This doesn't follow the single success/fail db principle thing. Fix that?
-		this.libraryStore.removeCurrentUser();
 		this.keycloak.logout();
-		this.keycloakUsername.set('');
 	}
 
 	getUsername(): string {
